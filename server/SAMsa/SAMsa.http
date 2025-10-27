@@ -1,0 +1,6 @@
+@SAMsa_HostAddress = http://localhost:5026
+
+GET {{SAMsa_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
