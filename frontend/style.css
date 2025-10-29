@@ -9,14 +9,17 @@
 
 body{
     font-size: 14px;
-    background-color: aliceblue;
+    background-image: url(background.jpg);
     font-family: "Source Serif";
-    
+    background-color: antiquewhite;
     
 }
 .main{
     background-color: white;
     width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -4px;
 }
 header{
     background: linear-gradient(rgb(90, 90, 90),rgb(50, 50, 50),rgb(77, 77, 77));
