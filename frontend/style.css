@@ -1,0 +1,50 @@
+@font-face {
+    font-family: "Instrument Serif";
+    src: url(InstrumentSerif-Italic.ttf);
+}
+@font-face {
+    font-family: "Source Serif";
+    src: url(SourceSerif4-VariableFont_opsz\,wght.ttf);
+}
+
+body{
+    font-size: 14px;
+    background-color: aliceblue;
+    font-family: "Source Serif";
+    
+    
+}
+.main{
+    background-color: white;
+    width: 800px;
+}
+header{
+    background: linear-gradient(rgb(90, 90, 90),rgb(50, 50, 50),rgb(77, 77, 77));
+    color: lightgray;
+    text-shadow: 4px;
+    text-align: center;
+}
+header h1{
+    font-family: "Instrument Serif";
+    font-optical-sizing: 120px;
+    font-size: 64px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+header h5{
+    font-weight: normal;
+    font-size: 14px;
+    margin-top: 0;
+}
+footer{
+    background: linear-gradient(rgb(90, 90, 90),rgb(50, 50, 50),rgb(77, 77, 77));
+    padding: 6px;
+    color: lightgray;
+    text-align: center;
+}
+footer a {
+    color: lightcyan;
+    text-decoration: none;
+}
