@@ -71,8 +71,8 @@ else
 	builder.Services.AddSingleton(new StorageInfo(false, string.Empty, string.Empty));
 }
 
-// HttpClient and OMDB service
-builder.Services.AddHttpClient<SAMsa.Services.OmdbService>();
+// HttpClient and TMDB service — register as a typed client so DI can inject HttpClient and IConfiguration
+builder.Services.AddHttpClient<TmdbService>();
 
 var app = builder.Build();
 

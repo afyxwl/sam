@@ -5,30 +5,34 @@ namespace SAMsa.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OmdbController : ControllerBase
+    public class TmdbController : ControllerBase
     {
-        private readonly OmdbService _omdb;
+        private readonly TmdbService _tmdb;
 
-        public OmdbController(OmdbService omdb)
+        public TmdbController(TmdbService tmdb)
         {
-            _omdb = omdb;
+            _tmdb = tmdb;
         }
 
         [HttpGet("search")]
         public async Task<IActionResult> Search([FromQuery] string q, [FromQuery] int page = 1)
         {
             if (string.IsNullOrWhiteSpace(q)) return BadRequest("q is required");
-            var res = await _omdb.SearchAsync(q, page, HttpContext.RequestAborted);
-            if (res == null) return BadRequest("OMDB API key not configured");
+            var res = await _tmdb.SearchAsync(q, page, HttpContext.RequestAborted);
             return Ok(res);
         }
 
-        [HttpGet("details")]
-        public async Task<IActionResult> Details([FromQuery] string id)
+        [HttpGet("{mediaType}/{id}")]
+        public async Task<IActionResult> Details(string mediaType, int id)
         {
-            if (string.IsNullOrWhiteSpace(id)) return BadRequest("id is required (imdb id or title)");
-            var res = await _omdb.GetDetailsAsync(id, HttpContext.RequestAborted);
-            if (res == null) return BadRequest("OMDB API key not configured");
+            var res = await _tmdb.GetDetailsAsync(mediaType, id, HttpContext.RequestAborted);
+            return Ok(res);
+        }
+
+        [HttpPost("guest-session")]
+        public async Task<IActionResult> CreateGuestSession()
+        {
+            var res = await _tmdb.CreateGuestSessionAsync(HttpContext.RequestAborted);
             return Ok(res);
         }
     }
