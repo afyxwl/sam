@@ -19,7 +19,7 @@
     "ConnectionString": "mongodb://localhost:27017",
     "Database": "samdb"
   },
-  "Tmdb": { "ApiKey": "YOUR_TMDB_API_KEY" }
+  "Omdb": { "ApiKey": "YOUR_OMDB_API_KEY" }
 }
 ```
 
@@ -63,7 +63,7 @@
     "content": "Фантастичні візуальні рішення",
     "rating": 8,
     "createdAt": "2025-10-28T17:22:00Z",
-    "tmdbId": 12345,
+    "externalId": "tt1234567",
     "replies": [ /* масив reply */ ]
   }
 ]
@@ -88,7 +88,7 @@
   "title": "Dune (2021)",
   "content": "Враження від фільму...",
   "rating": 8,
-  "tmdbId": 12345
+  "externalId": "tt1234567"
 }
 ```
 
@@ -157,31 +157,30 @@
 
 ---
 
-### TMDB — проксі до TheMovieDB
+### OMDB — проксі до OMDB API
 
-> Примітка: для роботи цих ендпоінтів потрібен API-ключ TMDB, який потрібно вказати в конфігурації (`Tmdb:ApiKey`). Якщо ключ відсутній, ендпоінти TMDB повертають порожню відповідь або `null`.
+> Примітка: для роботи цих ендпоінтів потрібен API-ключ OMDB, який потрібно вказати в конфігурації (`Omdb:ApiKey`). Якщо ключ відсутній, ендпоінти OMDB повертають порожню відповідь або `null`.
 
-1) Пошук (multi-search)
+1) Пошук
 
 - Метод: GET
-- URL: `/api/tmdb/search?q={query}&page={page}`
+- URL: `/api/omdb/search?q={query}&page={page}`
 - Параметри:
   - `q` — строка пошуку (обов'язково)
   - `page` — номер сторінки (опційно, за замовчуванням 1)
-- Відповідь: 200 OK з результатом, як його повертає TMDB (у форматі JSON).
+- Відповідь: 200 OK з результатом, як його повертає OMDB (у форматі JSON).
 
 Приклад:
 
-`GET /api/tmdb/search?q=dune`
+`GET /api/omdb/search?q=dune`
 
 2) Деталі
 
 - Метод: GET
-- URL: `/api/tmdb/{mediaType}/{id}`
+- URL: `/api/omdb/details?id={imdbIdOrTitle}`
 - Параметри:
-  - `mediaType` — `movie` або `tv` (підтримуються ті, що TMDB дозволяє)
-  - `id` — числовий id в TMDB
-- Відповідь: 200 OK з деталями від TMDB або 404/помилка від TMDB (проксі).
+  - `id` — IMDb id (наприклад `tt0133093`) або заголовок (title)
+- Відповідь: 200 OK з деталями від OMDB або 404/помилка від OMDB (проксі).
 
 ---
 

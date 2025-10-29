@@ -21,8 +21,8 @@ namespace SAMsa.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // External TMDB id if linked
-        public int? TmdbId { get; set; }
+    // External movie/show id if linked (e.g. OMDB imdbID)
+    public string? ExternalId { get; set; }
 
         // Navigation
         public List<Reply> Replies { get; set; } = new List<Reply>();

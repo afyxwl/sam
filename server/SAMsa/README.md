@@ -9,17 +9,17 @@ This is a minimal ASP.NET Core Web API backend for a simple social app centered 
 Configuration
 -------------
 
-Set your TMDB API key in configuration (appsettings.Development.json, appsettings.json, or user secrets) under:
+Set your OMDB API key in configuration (appsettings.Development.json, appsettings.json, or user secrets) under:
 
 ```
 {
-  "Tmdb": {
-    "ApiKey": "YOUR_TMDB_API_KEY"
+  "Omdb": {
+    "ApiKey": "YOUR_OMDB_API_KEY"
   }
 }
 ```
 
-If the API key is not configured, TMDB endpoints will return 400 with a message.
+If the API key is not configured, OMDB endpoints will return 400 with a message.
 
 Run
 ---
@@ -44,8 +44,8 @@ API Endpoints
 - POST /api/posts/{postId}/replies — create reply (JSON body: Author, Content)
 - DELETE /api/posts/{postId}/replies/{id} — delete reply
 
-- GET /api/tmdb/search?q=some+query — search TMDB (requires API key)
-- GET /api/tmdb/{mediaType}/{id} — get TMDB details for media type (movie/tv) and id
+- GET /api/omdb/search?q=some+query — search OMDB (requires API key)
+- GET /api/omdb/details?id={imdbIdOrTitle} — get OMDB details by imdb id or title
 
 Examples
 --------
@@ -58,10 +58,10 @@ curl -X POST http://localhost:5005/api/posts \
   -d '{"author":"Alice","title":"Dune (2021)","content":"Great visuals!","rating":8}'
 ```
 
-Search TMDB:
+Search OMDB:
 
 ```bash
-curl "http://localhost:5005/api/tmdb/search?q=dune"
+curl "http://localhost:5005/api/omdb/search?q=dune"
 ```
 
 Notes

@@ -71,8 +71,8 @@ else
 	builder.Services.AddSingleton(new StorageInfo(false, string.Empty, string.Empty));
 }
 
-// HttpClient and TMDB service
-builder.Services.AddHttpClient<SAMsa.Services.TmdbService>();
+// HttpClient and OMDB service
+builder.Services.AddHttpClient<SAMsa.Services.OmdbService>();
 
 var app = builder.Build();
 

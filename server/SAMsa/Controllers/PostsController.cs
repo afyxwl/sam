@@ -50,7 +50,7 @@ namespace SAMsa.Controllers
             post.Title = updated.Title;
             post.Content = updated.Content;
             post.Rating = updated.Rating;
-            post.TmdbId = updated.TmdbId;
+            post.ExternalId = updated.ExternalId;
 
             await _repo.UpdateAsync(post);
             return NoContent();
