@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SAMsa")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d445bdf0d8221a0199e0cefb6de6aaa89a76ce70")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7db6e3144c92284bb0d3ebf7117de9c93d67e2b")]
 [assembly: System.Reflection.AssemblyProductAttribute("SAMsa")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SAMsa")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
