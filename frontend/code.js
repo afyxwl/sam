@@ -2,10 +2,10 @@ function myfunc(){
     console.log("rizz");
 }
 function post(){
-    fetch("http://localhost:5079/users/",{
+    fetch("http://localhost:5041/users/",{
         method: "POST",
         body: JSON.stringify({
-            name: "Nigger",
+            name: "Persin",
             group: "PI-271"
         }),
         headers: {
@@ -18,7 +18,7 @@ function post(){
     .then((json) => console.log(json));
 }
 function getall(){
-    fetch("http://localhost:5079/users/",{
+    fetch("http://localhost:5041/users/",{
         method: "GET",
         headers: {
     "Content-type": "application/json; charset=UTF-8"}
