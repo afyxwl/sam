@@ -84,3 +84,13 @@ function newpost(name, stars, text, tmdb_id, tmbd_name){
         document.getElementById(tmdb_id+"_"+i).appendChild(movie);
     i++;
 }
+
+function buttonPress(){
+    newpost(
+        document.getElementById("iname").value,
+        document.getElementById("istar").value,
+        document.getElementById("ipost").value,
+        document.getElementById("itmdb").value,
+        "unknown"
+    );
+}

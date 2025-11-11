@@ -16,11 +16,11 @@
         </header>
 
         <div class="post_publisher">
-            <input class="long" type="text" maxlength="250" placeholder="Напишіть щось своє про фільм...(максимум 250 символів)...">
-            <input maxlength="32" placeholder="Хто ви є?">
-            <input maxlength="32" placeholder="Код фільму на TMDB">
-            <input type="number" min="1" max="10" maxlength="1" inputmode="numeric" placeholder="Зірочки">
-            <button>Публікувати</button>
+            <input id="ipost"  class="long" type="text" maxlength="250" placeholder="Напишіть щось своє про фільм...(максимум 250 символів)...">
+            <input id="iname"maxlength="32" placeholder="Хто ви є?">
+            <input id="itmdb" maxlength="32" placeholder="Код фільму на TMDB">
+            <input id="istar" type="number" min="1" max="10" maxlength="1" inputmode="numeric" placeholder="Зірочки">
+            <button id="post_button" onclick="buttonPress()">Публікувати</button>
         </div>
 
         <span id="posts_container"></span>
