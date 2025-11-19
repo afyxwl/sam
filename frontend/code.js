@@ -22,7 +22,7 @@ function post(){
     .then((json) => console.log(json));
 }
 function getall(){
-    fetch("http://localhost:5041/users/",{
+    fetch("http://localhost:5096/reviews/",{
         method: "GET",
         headers: {
     "Content-type": "application/json; charset=UTF-8"}

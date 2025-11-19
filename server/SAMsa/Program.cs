@@ -56,8 +56,6 @@ app.MapPost("/reviews", async (CreateReview myReview) =>
 {
     if (string.IsNullOrWhiteSpace(myReview.DisplayName))
         return Results.BadRequest(new { error = "Name is required" });
-    if (string.IsNullOrWhiteSpace(myReview.Title))
-        return Results.BadRequest(new { error = "Title is required" });
     if (myReview.Rating < 1 || myReview.Rating > 10)
         return Results.BadRequest(new { error = "Rating must be between 1 and 10" });
     if (myReview.TmdbId <= 0)
@@ -67,7 +65,6 @@ app.MapPost("/reviews", async (CreateReview myReview) =>
     {
         Id = ObjectId.GenerateNewId().ToString(),
         DisplayName = myReview.DisplayName.Trim(),
-        Title = myReview.Title.Trim(),
         Text = myReview.Text.Trim(),
         TmdbId = myReview.TmdbId,
         Rating = myReview.Rating,
@@ -152,7 +149,6 @@ public class Review
     public string Id { get; set; } = string.Empty;
 
     public string DisplayName { get; set; } = string.Empty;
-    public string Title { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
     public int TmdbId { get; set; }
     public int Rating { get; set; }
@@ -162,7 +158,6 @@ public class Review
 public class CreateReview
 {
     public string DisplayName { get; set; } = string.Empty;
-    public string Title { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
     public int TmdbId { get; set; } = 0;
     public int Rating { get; set; } = 0;

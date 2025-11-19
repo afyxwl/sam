@@ -15,12 +15,11 @@ All endpoints serve/accept JSON. The server exposes the following endpoints:
   - Request JSON body (example):
     {
       "displayName": "Alice",
-      "title": "Great sci-fi",
       "text": "Loved the visuals and story.",
       "tmdbId": 12345,
       "rating": 9
     }
-  - Validation: displayName and title required; tmdbId must be > 0; rating must be 1..10
+  - Validation: `displayName` required; `tmdbId` must be > 0; `rating` must be 1..10
   - Responses:
     - 201 Created: created review JSON (includes `id` and `createdAt`)
     - 400 Bad Request: { "error": "..." } on validation failure
@@ -36,7 +35,6 @@ Review object shape (returned by GET /reviews and POST response):
 {
   "id": "<objectId>",
   "displayName": "Alice",
-  "title": "Great sci-fi",
   "text": "...",
   "tmdbId": 12345,
   "rating": 9,
