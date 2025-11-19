@@ -52,7 +52,7 @@ app.MapGet("/reviews", async () =>
     return Results.Ok(list);
 });
 
-app.MapPost("/reviews", async (CreateReview myReview) =>
+app.MapPost("/reviews", async (CreateReview myReview, IHttpClientFactory httpFactory) =>
 {
     if (string.IsNullOrWhiteSpace(myReview.DisplayName))
         return Results.BadRequest(new { error = "Name is required" });
@@ -61,33 +61,13 @@ app.MapPost("/reviews", async (CreateReview myReview) =>
     if (myReview.TmdbId <= 0)
         return Results.BadRequest(new { error = "TMDB ID must be a positive integer" });
 
-    var review = new Review
-    {
-        Id = ObjectId.GenerateNewId().ToString(),
-        DisplayName = myReview.DisplayName.Trim(),
-        Text = myReview.Text.Trim(),
-        TmdbId = myReview.TmdbId,
-        Rating = myReview.Rating,
-        CreatedAt = DateTime.UtcNow
-    };
-
-    await reviewsCollection.InsertOneAsync(review);
-
-    return Results.Created($"/reviews/{review.Id}", review);
-});
-
-// TMDB 
-app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
-{
     if (string.IsNullOrWhiteSpace(TMDBKey) || TMDBKey == "your_tmdb_key_here")
         return Results.StatusCode(500);
 
     var client = httpFactory.CreateClient("tmdb");
-    
-    string header = "Bearer " + TMDBKey;
     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", TMDBKey);
 
-    var resp = await client.GetAsync($"movie/{id}?language=uk-UA");
+    var resp = await client.GetAsync($"movie/{myReview.TmdbId}?language=uk-UA");
     if (!resp.IsSuccessStatusCode)
     {
         string tmdbBody = string.Empty;
@@ -97,11 +77,10 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
         }
         catch { }
 
-        // Descriptive error
         var statusCode = resp.StatusCode;
         if (statusCode == System.Net.HttpStatusCode.NotFound)
         {
-            return Results.NotFound(new { error = "TMDB: movie not found", tmdbStatus = (int)statusCode });
+            return Results.BadRequest(new { error = "TMDB: movie not found", tmdbStatus = (int)statusCode });
         }
         if (statusCode == System.Net.HttpStatusCode.Unauthorized || statusCode == System.Net.HttpStatusCode.Forbidden)
         {
@@ -112,7 +91,6 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
             return Results.Json(new { error = "TMDB: rate limit exceeded", tmdbStatus = (int)statusCode, details = tmdbBody }, statusCode: 502);
         }
 
-        // Generic failure
         return Results.Json(new { error = $"TMDB error: {(int)statusCode} {statusCode}", tmdbStatus = (int)statusCode, details = tmdbBody }, statusCode: 502);
     }
 
@@ -126,7 +104,8 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
 
     if (root.TryGetProperty("poster_path", out var poster) && poster.ValueKind != JsonValueKind.Null)
         path = poster.GetString();
-    else  if (root.TryGetProperty("backdrop_path", out var backdrop) && backdrop.ValueKind != JsonValueKind.Null){
+    else if (root.TryGetProperty("backdrop_path", out var backdrop) && backdrop.ValueKind != JsonValueKind.Null)
+    {
         path = backdrop.GetString();
         Console.WriteLine("Using backdrop_path");
     }
@@ -137,8 +116,24 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
         posterUrl = $"https://image.tmdb.org/t/p/w500{path}";
     }
 
-    return Results.Ok(new { MovieName = title, PosterUrl = posterUrl });
+    var review = new Review
+    {
+        Id = ObjectId.GenerateNewId().ToString(),
+        DisplayName = myReview.DisplayName.Trim(),
+        Text = myReview.Text.Trim(),
+        TmdbId = myReview.TmdbId,
+        Rating = myReview.Rating,
+        CreatedAt = DateTime.UtcNow,
+        MovieName = title,
+        PosterUrl = posterUrl
+    };
+
+    await reviewsCollection.InsertOneAsync(review);
+
+    return Results.Created($"/reviews/{review.Id}", review);
 });
+
+
 
 app.Run();
 
@@ -150,6 +145,8 @@ public class Review
 
     public string DisplayName { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
+    public string MovieName { get; set; } = string.Empty;
+    public string? PosterUrl { get; set; } = null;
     public int TmdbId { get; set; }
     public int Rating { get; set; }
     public DateTime CreatedAt { get; set; }
