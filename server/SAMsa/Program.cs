@@ -65,17 +65,18 @@ app.MapPost("/reviews", async (CreateReview myReview) =>
     return Results.Created($"/reviews/{review.Id}", review);
 });
 
-// TMDB lookup endpoint - returns movie title and banner (backdrop) URL
+// TMDB lookup endpoint - returns movie title and poster URL
 app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
 {
     if (string.IsNullOrWhiteSpace(TMDBKey) || TMDBKey == "your_tmdb_key_here")
         return Results.StatusCode(500);
 
     var client = httpFactory.CreateClient("tmdb");
-
+    
+    string header = "Bearer " + TMDBKey;
     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", TMDBKey);
 
-    var resp = await client.GetAsync($"movie/{id}");
+    var resp = await client.GetAsync($"movie/{id}?language=uk-UA");
     if (!resp.IsSuccessStatusCode)
     {
         // Read TMDB response body (if any) for additional detail
@@ -111,18 +112,20 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
     var root = doc.RootElement;
     string title = root.GetProperty("title").GetString() ?? string.Empty;
 
-    // Prefer backdrop_path; fall back to poster_path
     string? path = null;
-    if (root.TryGetProperty("backdrop_path", out var backdrop) && backdrop.ValueKind != JsonValueKind.Null)
-        path = backdrop.GetString();
-    else if (root.TryGetProperty("poster_path", out var poster) && poster.ValueKind != JsonValueKind.Null)
+
+    if (root.TryGetProperty("poster_path", out var poster) && poster.ValueKind != JsonValueKind.Null)
         path = poster.GetString();
+    else  if (root.TryGetProperty("backdrop_path", out var backdrop) && backdrop.ValueKind != JsonValueKind.Null){
+        path = backdrop.GetString();
+        Console.WriteLine("Using backdrop_path");
+    }
 
     string? bannerUrl = null;
     if (!string.IsNullOrWhiteSpace(path))
     {
         // Use TMDB image base URL with a reasonable size for banners
-        bannerUrl = $"https://image.tmdb.org/t/p/w780{path}";
+        bannerUrl = $"https://image.tmdb.org/t/p/w192{path}";
     }
 
     return Results.Ok(new { MovieName = title, BannerUrl = bannerUrl });
