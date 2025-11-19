@@ -6,23 +6,36 @@ function myfunc(){
     console.log("rizz");
 }
 function post(){
-    fetch("http://localhost:5041/users/",{
-        method: "POST",
-        body: JSON.stringify({
-            name: "Persin",
-            group: "PI-271"
-        }),
-        headers: {
-    "Content-type": "application/json; charset=UTF-8",
-    'Access-Control-Allow-Origin':'*',
-    'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
-        }
-    })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+    const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:5096/posts/");
+        xhr
+        .setRequestHeader("Content-Type", "application/json");
+        const body = JSON
+        .stringify(
+        {
+            userId: 1,
+            title: "Demo Todo Data using XMLHttpRequest",
+            completed: false,
+        });
+        xhr
+        .onload = () => 
+        {
+            if (xhr.readyState == 4 && xhr.status == 201) 
+            {
+                console.log(JSON.parse(xhr.responseText));
+            } else 
+            {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+        xhr.send(body);
 }
 function getall(){
+<<<<<<< HEAD
     fetch("http://localhost:5096/reviews/",{
+=======
+    fetch("http://10.216.208.288:5096/reviews/",{
+>>>>>>> 024b771 (?)
         method: "GET",
         headers: {
     "Content-type": "application/json; charset=UTF-8"}

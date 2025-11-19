@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAMsa", "SAMsa.csproj", "{B8B549E5-A537-F28C-2CCD-1064B7C82FFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8B549E5-A537-F28C-2CCD-1064B7C82FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B549E5-A537-F28C-2CCD-1064B7C82FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B549E5-A537-F28C-2CCD-1064B7C82FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B549E5-A537-F28C-2CCD-1064B7C82FFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2521DB49-9FD3-4D5E-9D83-7C4B5AB2EBCC}
+	EndGlobalSection
+EndGlobal
