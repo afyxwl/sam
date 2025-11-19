@@ -10,13 +10,13 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Register an HttpClient for TMDB calls
+// HttpClient for TMDB 
 builder.Services.AddHttpClient("tmdb", c =>
 {
     c.BaseAddress = new Uri("https://api.themoviedb.org/3/");
 });
 
-// Enable CORS (development-friendly permissive policy)
+// Enable CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -29,7 +29,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Use CORS policy
+// CORS policy
 app.UseCors("AllowAll");
 
 string TMDBKey = Environment.GetEnvironmentVariable("TMDBKey") ?? "your_tmdb_key_here";
@@ -79,7 +79,7 @@ app.MapPost("/reviews", async (CreateReview myReview) =>
     return Results.Created($"/reviews/{review.Id}", review);
 });
 
-// TMDB lookup endpoint - returns movie title and poster URL
+// TMDB 
 app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
 {
     if (string.IsNullOrWhiteSpace(TMDBKey) || TMDBKey == "your_tmdb_key_here")
@@ -138,7 +138,6 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
     string? posterUrl = null;
     if (!string.IsNullOrWhiteSpace(path))
     {
-        // Use TMDB image base URL with a reasonable size for posters
         posterUrl = $"https://image.tmdb.org/t/p/w500{path}";
     }
 
