@@ -25,6 +25,13 @@ All endpoints serve/accept JSON. The server exposes the following endpoints:
     - 201 Created: created review JSON (includes `id` and `createdAt`)
     - 400 Bad Request: { "error": "..." } on validation failure
 
+- GET /tmdb/{id}
+  - Purpose: Look up movie metadata from TMDB (title and banner/poster).
+  - Path param: `id` (TMDB movie id, integer)
+  - Notes: Requires the `TMDBKey` environment variable to be set to a TMDB v4 access token. The server sends TMDB requests using the header `Authorization: Bearer <token>`.
+  - Response: 200 OK with JSON { "movieName": "...", "posterUrl": "https://..." } (posterUrl may be null if no image available).
+  - Failure codes: 404 when TMDB reports NotFound; 502 for upstream TMDB failures (including unauthorized or rate-limited responses); 500 if `TMDBKey` is missing or the placeholder is still present.
+
 Review object shape (returned by GET /reviews and POST response):
 {
   "id": "<objectId>",
@@ -37,11 +44,11 @@ Review object shape (returned by GET /reviews and POST response):
 }
 
 Notes:
-- CORS is enabled (AllowAnyOrigin) for browser clients.
-- MongoDB connection can be configured with environment variables:
-  - `MONGO_CONNECTION` (default: mongodb://localhost:27017)
-  - `MONGO_DB` (default: movie_reviews_db)
-  - `MONGO_COLLECTION` (default: reviews)
+- **MongoDB connection:** The current server code uses hardcoded defaults rather than reading environment variables. The defaults are:
+  - connection string: `mongodb://localhost:27017`
+  - database: `movie_reviews_db`
+  - collection: `reviews`
+  To change these values, edit `Program.cs` where the `MongoClient` and database/collection names are set.
 - The server listens on the URL(s) shown when you run it; examples used in tests: http://localhost:5096
 
 - TMDB API: configure your TMDB v4 access token in the `TMDBKey` environment variable. The server sends TMDB requests using the header `Authorization: Bearer <token>` (no api_key query param).

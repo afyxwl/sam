@@ -16,7 +16,21 @@ builder.Services.AddHttpClient("tmdb", c =>
     c.BaseAddress = new Uri("https://api.themoviedb.org/3/");
 });
 
+// Enable CORS (development-friendly permissive policy)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
+
+// Use CORS policy
+app.UseCors("AllowAll");
 
 string TMDBKey = Environment.GetEnvironmentVariable("TMDBKey") ?? "your_tmdb_key_here";
 
@@ -121,14 +135,14 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
         Console.WriteLine("Using backdrop_path");
     }
 
-    string? bannerUrl = null;
+    string? posterUrl = null;
     if (!string.IsNullOrWhiteSpace(path))
     {
-        // Use TMDB image base URL with a reasonable size for banners
-        bannerUrl = $"https://image.tmdb.org/t/p/w192{path}";
+        // Use TMDB image base URL with a reasonable size for posters
+        posterUrl = $"https://image.tmdb.org/t/p/w500{path}";
     }
 
-    return Results.Ok(new { MovieName = title, BannerUrl = bannerUrl });
+    return Results.Ok(new { MovieName = title, PosterUrl = posterUrl });
 });
 
 app.Run();
