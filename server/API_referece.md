@@ -43,3 +43,5 @@ Notes:
   - `MONGO_DB` (default: movie_reviews_db)
   - `MONGO_COLLECTION` (default: reviews)
 - The server listens on the URL(s) shown when you run it; examples used in tests: http://localhost:5096
+
+- TMDB API: configure your TMDB v4 access token in the `TMDBKey` environment variable. The server sends TMDB requests using the header `Authorization: Bearer <token>` (no api_key query param).
