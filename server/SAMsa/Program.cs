@@ -93,15 +93,14 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
     var resp = await client.GetAsync($"movie/{id}?language=uk-UA");
     if (!resp.IsSuccessStatusCode)
     {
-        // Read TMDB response body (if any) for additional detail
         string tmdbBody = string.Empty;
         try
         {
             tmdbBody = await resp.Content.ReadAsStringAsync();
         }
-        catch { /* ignore read errors */ }
+        catch { }
 
-        // Return more descriptive errors depending on TMDB status code
+        // Descriptive error
         var statusCode = resp.StatusCode;
         if (statusCode == System.Net.HttpStatusCode.NotFound)
         {
@@ -116,7 +115,7 @@ app.MapGet("/tmdb/{id:int}", async (int id, IHttpClientFactory httpFactory) =>
             return Results.Json(new { error = "TMDB: rate limit exceeded", tmdbStatus = (int)statusCode, details = tmdbBody }, statusCode: 502);
         }
 
-        // Generic TMDB failure
+        // Generic failure
         return Results.Json(new { error = $"TMDB error: {(int)statusCode} {statusCode}", tmdbStatus = (int)statusCode, details = tmdbBody }, statusCode: 502);
     }
 
