@@ -19,82 +19,11 @@
             <input id="ipost"  class="long" type="text" maxlength="250" placeholder="Напишіть щось своє про фільм...(максимум 250 символів)...">
             <input id="iname"maxlength="32" placeholder="Хто ви є?">
             <input id="itmdb" maxlength="32" placeholder="Код фільму на TMDB">
-            <input id="istar" type="number" min="1" max="10" maxlength="1" inputmode="numeric" placeholder="Зірочки">
+            <input id="istar" type="number" min="1" max="10" maxlength="1" inputmode="numeric" pattern="\d{1}" placeholder="Зірочки">
             <button id="post_button" onclick="buttonPress()">Публікувати</button>
         </div>
 
         <span id="posts_container"></span>
-
-        <div class="post">
-            <img class="poster" src="https://www.themoviedb.org/t/p/w1280/8ByezQdVeKfZB2ZFyUXByFePCwm.jpg">
-            <div class="post_text">
-            <span class="author_date">Пише 'username', 'date', </span>
-            <br>
-            <div class="stars">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                (10)
-            </div>
-            <p>Простий, але геніальний! Актори грають феноменально. Динамічний сюжет, який тримає до кінця. Шедевр!</p>
-            <span>Йдеться про <a href="https://www.themoviedb.org/tv/124834-heartstopper">Коли завмирає серце (2022)</a></span><br>
-            </div>
-        </div>
-        <div class="post">
-            <img class="poster" src="https://www.themoviedb.org/t/p/w1280/gUMrbt3X6ifkLiGaKBaudGZfQh6.jpg">
-            <div class="post_text">
-            <span class="author_date">Пише 'username', 'date', </span>
-            <br>
-            <div class="stars">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                (10)
-            </div>
-            <p>Простий, але геніальний! Актори грають феноменально. Динамічний сюжет, який тримає до кінця. Шедевр!</p>
-            <span>Йдеться про <a href="https://www.themoviedb.org/tv/124834-heartstopper">Коли завмирає серце (2022)</a></span><br>
-            </div>
-        </div>
-
-        <div class="post">
-            <img class="poster" src="https://www.themoviedb.org/t/p/w1280/8ByezQdVeKfZB2ZFyUXByFePCwm.jpg">
-            <div class="post_text">
-            <span class="author_date">Пише 'username', 'date', </span>
-            <br>
-            <div class="stars">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                <img src="star.svg">
-                (10)
-            </div>
-            <p>Простий, але геніальний! Актори грають феноменально. Динамічний сюжет, який тримає до кінця. Шедевр!</p>
-            <span>Йдеться про <a href="https://www.themoviedb.org/tv/124834-heartstopper">Коли завмирає серце (2022)</a></span><br>
-            </div>
-        </div>
-
-     
-        
 
         <footer>© TopFilms.COM 2025, всі права захищені.
             Розроблено командою <a href="https://github.com/afyxwl/sam">SAM</a>.
